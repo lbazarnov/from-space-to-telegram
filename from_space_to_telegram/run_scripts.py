@@ -1,33 +1,11 @@
 import requests
 import os
-from datetime import datetime
 from pathlib import Path
 from dotenv import load_dotenv
-from urllib.parse import urlsplit
-
-
-def download_image(url, path, params=None):
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    with open(path, 'wb') as file:
-        file.write(response.content)
-
-
-def get_file_extension(url):
-    splitted_url = os.path.splitext(urlsplit(url).path)
-    file_extension = splitted_url[1]
-    return file_extension
-
-
-def fetch_spacex_last_launch(path):
-    spacex_launch_images_url = 'https://api.spacexdata.com/v5/launches/5eb87d47ffd86e000604b38a'  # noqa: E501
-    response = requests.get(spacex_launch_images_url)
-    response.raise_for_status()
-    json_response = response.json()['links']['flickr']['original']
-    for image_number, image_url in enumerate(json_response):
-        file_extension = get_file_extension(image_url)
-        file_path = f'{path}/spacex{image_number}{file_extension}'
-        download_image(image_url, file_path)
+from datetime import datetime
+from from_space_to_telegram.downloading import download_image
+from from_space_to_telegram.downloading import get_file_extension
+from from_space_to_telegram.scripts.fetch_spacex_images import fetch_spacex_launch_images
 
 
 def fetch_nasa_apod(api_key, path):
@@ -63,15 +41,11 @@ def fetch_nasa_epic_photos(api_key, path):
         download_image(image_url, file_path, params=payload)
 
 
-def main():
+def run_scripts():
     load_dotenv()
     nasa_api_key = os.environ['NASA_API_TOKEN']
     images_path = 'images'
     Path(f'{images_path}').mkdir(exist_ok=True)
-    # fetch_spacex_last_launch(images_path)
-    # fetch_nasa_apod(nasa_api_key, images_path)
+    fetch_spacex_launch_images(images_path)
+    fetch_nasa_apod(nasa_api_key, images_path)
     fetch_nasa_epic_photos(nasa_api_key, images_path)
-
-
-if __name__ == '__main__':
-    main()
