@@ -13,7 +13,7 @@ python-dotenv = "^0.21.0"
 python-telegram-bot = "13.15"
 
 [tool.poetry.scripts]
-space-telegram = "from_space_to_telegram.run_scripts:run_scripts"
+from-space-to-telegram = "from_space_to_telegram.main:main"
 fetch-spacex-images = "from_space_to_telegram.scripts.fetch_spacex_images:main"
 fetch-nasa-apod = "from_space_to_telegram.scripts.fetch_nasa_apod_images:main"
 fetch-nasa-epic = "from_space_to_telegram.scripts.fetch_nasa_epic_images:main"

@@ -6,7 +6,7 @@ from from_space_to_telegram.scripts.fetch_nasa_apod_images import fetch_nasa_apo
 from from_space_to_telegram.scripts.fetch_nasa_epic_images import fetch_nasa_epic  # noqa: E501
 
 
-def run_scripts():
+def main():
     load_dotenv()
     nasa_api_key = os.environ['NASA_API_TOKEN']
     images_path = 'images'
@@ -14,3 +14,7 @@ def run_scripts():
     fetch_spacex_launch_images(images_path)
     fetch_nasa_apod(nasa_api_key, images_path)
     fetch_nasa_epic(nasa_api_key, images_path)
+
+
+if __name__ == '__main__':
+    main()
