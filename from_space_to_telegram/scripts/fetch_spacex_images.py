@@ -8,7 +8,7 @@ from from_space_to_telegram.downloading import get_file_extension
 def fetch_spacex_launch_images(path, launch_id=None):
     '''Fetches SpaceX launch images'''
     if launch_id:
-        spacex_launch_images_url = 'https://api.spacexdata.com/v5/launches/{launch_id}'  # noqa: E501
+        spacex_launch_images_url = f'https://api.spacexdata.com/v5/launches/{launch_id}'  # noqa: E501
         response = requests.get(spacex_launch_images_url)
         response.raise_for_status()
         images_urls = response.json()['links']['flickr']['original']
@@ -27,14 +27,13 @@ def fetch_spacex_launch_images(path, launch_id=None):
 def main():
     arg_parser = ArgumentParser()
     arg_parser.add_argument(
-        '-id', dest='id', default='', help='SpaceX launch ID'
-    )
-    arg_parser.add_argument(
         '-d', dest='path', default=os.getcwd(),
         help='Path to directory where images should be stored')
+    arg_parser.add_argument(
+        '-id', dest='id', default='', help='SpaceX launch ID')
     args = arg_parser.parse_args()
     fetch_spacex_launch_images(args.path, args.id)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
