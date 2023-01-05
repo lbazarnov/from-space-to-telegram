@@ -16,7 +16,7 @@ def fetch_spacex_launch_images(path, launch_id=None):
         response = requests.get('https://api.spacexdata.com/v5/launches/')
         response.raise_for_status()
         launches_with_images = [
-            launch for launch in response.json() if launch['links']['flickr']['original']]
+            launch for launch in response.json() if launch['links']['flickr']['original']]  # noqa: E501
         images_urls = launches_with_images[0]['links']['flickr']['original']
     for image_number, image_url in enumerate(images_urls):
         file_extension = get_file_extension(image_url)
@@ -27,13 +27,13 @@ def fetch_spacex_launch_images(path, launch_id=None):
 def main():
     arg_parser = ArgumentParser()
     arg_parser.add_argument(
-        '-id', dest='launch_id', default='', help='SpaceX launch ID'
+        '-id', dest='id', default='', help='SpaceX launch ID'
     )
     arg_parser.add_argument(
-        '-d', dest='path', default='',
+        '-d', dest='path', default=os.getcwd(),
         help='Path to directory where images should be stored')
     args = arg_parser.parse_args()
-    fetch_spacex_launch_images(args.path, args.launch_id)
+    fetch_spacex_launch_images(args.path, args.id)
 
 
 if __name__ == "__main__":

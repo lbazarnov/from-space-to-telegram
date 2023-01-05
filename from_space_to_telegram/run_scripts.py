@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from datetime import datetime
 from from_space_to_telegram.downloading import download_image
 from from_space_to_telegram.downloading import get_file_extension
-from from_space_to_telegram.scripts.fetch_spacex_images import fetch_spacex_launch_images
+from from_space_to_telegram.scripts.fetch_spacex_images import fetch_spacex_launch_images  # noqa: E501
 
 
 def fetch_nasa_apod(api_key, path):
