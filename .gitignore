@@ -4,6 +4,13 @@
 # macOS files
 .DS_Store
 
+# Images
+images/
+*jpg
+*jpeg
+*gif
+*png
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -20,7 +27,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-images/
 lib/
 lib64/
 parts/
