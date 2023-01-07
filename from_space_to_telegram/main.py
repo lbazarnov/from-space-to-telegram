@@ -8,7 +8,7 @@ from from_space_to_telegram.scripts.fetch_nasa_epic_images import fetch_nasa_epi
 
 def main():
     load_dotenv()
-    nasa_api_key = os.environ['NASA_API_TOKEN']
+    nasa_api_token = os.environ['NASA_API_TOKEN']
     images_path = 'images'
     Path(f'{images_path}').mkdir(exist_ok=True)
     fetch_spacex_launch_images(images_path)

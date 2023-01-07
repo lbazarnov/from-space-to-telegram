@@ -25,7 +25,7 @@ def fetch_nasa_apod(api_key, path):
 
 def main():
     load_dotenv()
-    nasa_api_key = os.environ['NASA_API_TOKEN']
+    nasa_api_token = os.environ['NASA_API_TOKEN']
     arg_parse = ArgumentParser()
     arg_parse.add_argument(
         '-d',
@@ -33,7 +33,7 @@ def main():
         default=os.getcwd(),
         help='Path to directory where images should be stored')
     args = arg_parse.parse_args()
-    fetch_nasa_apod(nasa_api_key, args.path)
+    fetch_nasa_apod(nasa_api_token, args.path)
 
 
 if __name__ == '__main__':
