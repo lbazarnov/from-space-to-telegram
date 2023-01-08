@@ -12,8 +12,8 @@ def main():
     images_path = 'images'
     Path(f'{images_path}').mkdir(exist_ok=True)
     fetch_spacex_launch_images(images_path)
-    fetch_nasa_apod(nasa_api_key, images_path)
-    fetch_nasa_epic(nasa_api_key, images_path)
+    fetch_nasa_apod(nasa_api_token, images_path)
+    fetch_nasa_epic(nasa_api_token, images_path)
 
 
 if __name__ == '__main__':
