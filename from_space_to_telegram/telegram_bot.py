@@ -19,9 +19,9 @@ def send_images_to_telegram(api_token, channel_id, images_directory, delay):
         for image in images:
             with open(image, 'rb') as image:
                 if os.path.getsize(image.name)/(1024**2) < 20:
-                    bot.send_document(channel_id, image)
+                    bot.send_document(channel_id, document=image)
+                    sleep(delay)
         shuffle(images)
-        sleep(delay)
 
 
 def main():
@@ -29,16 +29,25 @@ def main():
     telegram_api_token = os.environ['TELEGRAM_API_TOKEN']
     channel_id = os.environ['CHANNEL_ID']
     path = 'images'
-    arg_parser = ArgumentParser()
-    arg_parser.add_argument(nargs='?',
-                            dest='pause_time',
-                            help='Time interval for posting photos to the channel in seconds',  # noqa: E501
-                            default=4*60*60,
-                            type=int)
-    args = arg_parser.parse_args()
+    arg_parse = ArgumentParser()
+    arg_parse.add_argument(
+        nargs='?',
+        dest='pause_time',
+        help='Time interval for posting photos to the channel in seconds',  # noqa: E501
+        default=14400,
+        type=int
+    )
+    args = arg_parse.parse_args()
     delay = args.pause_time
-    send_images_to_telegram(
-        telegram_api_token, channel_id, path, delay)
+    try:
+        send_images_to_telegram(
+            telegram_api_token, channel_id, path, delay)
+    except telegram.error.BadRequest as bad_request:
+        print(bad_request)
+    except telegram.error.Unauthorized as unauthorized_user:
+        print(f'Oops! {unauthorized_user}. Looks like the Telegram API token '
+              'you entered is incorrect or expired.'
+              ' Please check it and try again.')
 
 
 if __name__ == '__main__':

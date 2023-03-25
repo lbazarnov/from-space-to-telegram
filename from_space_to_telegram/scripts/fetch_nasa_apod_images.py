@@ -6,11 +6,11 @@ from from_space_to_telegram.downloading import download_image
 from from_space_to_telegram.downloading import get_file_extension
 
 
-def fetch_nasa_apod(api_key, path):
+def fetch_nasa_apod(api_key, path, count):
     '''Fetches 30 random NASA Astronomy Pictures of the Day'''
     nasa_url = 'https://api.nasa.gov/planetary/apod'
     payload = {'api_key': api_key,
-               'count': 30}
+               'count': count}
     response = requests.get(url=nasa_url, params=payload)
     response.raise_for_status()
     image_urls = []
@@ -32,8 +32,14 @@ def main():
         dest='path',
         default=os.getcwd(),
         help='Path to directory where images should be stored')
+    arg_parse.add_argument(
+        '-c',
+        dest='count',
+        default=30,
+        help='Number of NASA Astronomy Pictures of the Day'
+    )
     args = arg_parse.parse_args()
-    fetch_nasa_apod(nasa_api_token, args.path)
+    fetch_nasa_apod(nasa_api_token, args.path, args.count)
 
 
 if __name__ == '__main__':
